@@ -133,7 +133,7 @@ onUnmounted(() => { if (timer) clearInterval(timer) })
       <!-- Wistia video embed -->
       <div class="vv-video-wrapper">
         <div class="vv-video-ratio">
-          <wistia-player media-id="5ql8l131me" aspect="1.7777777777777777"></wistia-player>
+          <wistia-player media-id="z9moh7a9ye" aspect="1.7777777777777777"></wistia-player>
         </div>
       </div>
 
@@ -387,7 +387,7 @@ onUnmounted(() => { if (timer) clearInterval(timer) })
     height: 100%;
 
     &:not(:defined) {
-      background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/5ql8l131me/swatch');
+      background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/z9moh7a9ye/swatch');
       display: block;
       filter: blur(5px);
       padding-top: 56.25%;
