@@ -4,7 +4,7 @@ import { ref, onMounted } from 'vue'
 const hoursLeft = ref(0)
 
 onMounted(() => {
-  const osDisqAt = localStorage.getItem('os_disq_at')
+  const osDisqAt = localStorage.getItem('lpb_disq_at')
   if (osDisqAt) {
     const elapsed = Date.now() - Number(osDisqAt)
     const remaining = 24 * 60 * 60 * 1000 - elapsed
@@ -20,7 +20,7 @@ onMounted(() => {
 
     <!-- TOP BAR -->
     <header class="nospace__topbar">
-      <h2 class="nospace__logo-text">ALE BARRETO</h2>
+      <h2 class="nospace__logo-text">LUISA PITA BEJARANO</h2>
     </header>
 
     <main class="nospace__main">
@@ -37,10 +37,10 @@ onMounted(() => {
         <div class="nospace__icon-wrap" aria-hidden="true">
           <i class="fa-solid fa-calendar-xmark nospace__icon"></i>
         </div>
-        <h1 class="nospace__title">Sin cupos disponibles en este momento</h1>
+        <h1 class="nospace__title">Cupos para este ciclo llenos</h1>
         <p class="nospace__subtitle">
-          Trabajamos con un número limitado de proyectos para garantizar una asesoría de calidad.
-          En este momento nuestros cupos de asesoría de diseño están completos.
+          El programa trabaja con grupos limitados para garantizar resultados reales.
+          En este momento los cupos del ciclo actual están completos.
         </p>
       </div>
 
@@ -54,7 +54,7 @@ onMounted(() => {
             </div>
             <div>
               <strong>Revisa tu email</strong>
-              <p>Te notificaremos cuando se libere un espacio en la agenda de Ale Barreto.</p>
+              <p>Te notificaremos cuando abra el próximo ciclo del programa.</p>
             </div>
           </li>
           <li>
@@ -62,8 +62,8 @@ onMounted(() => {
               <i class="fa-brands fa-whatsapp"></i>
             </div>
             <div>
-              <strong>Proyecto urgente</strong>
-              <p>Si tu proyecto necesita atención inmediata, contáctanos por WhatsApp y evaluaremos tu caso.</p>
+              <strong>¿Empezar ya?</strong>
+              <p>Si no puedes esperar, escríbenos por WhatsApp y evaluamos si hay forma de incluirte en el ciclo actual.</p>
             </div>
           </li>
         </ul>
@@ -72,13 +72,13 @@ onMounted(() => {
       <!-- Teaser -->
       <div class="nospace__teaser">
         <div class="nospace__teaser-badge">
-          <i class="fa-solid fa-tree" aria-hidden="true"></i>
-          Próximamente
+          <i class="fa-solid fa-fire-flame-curved" aria-hidden="true"></i>
+          Próximo ciclo
         </div>
-        <h2 class="nospace__teaser-title">Guía de Diseño y Selección de Madera</h2>
+        <h2 class="nospace__teaser-title">Programa Baja 8 en 8 — siguiente grupo</h2>
         <p class="nospace__teaser-body">
-          Estamos preparando una guía completa para ayudarte a seleccionar el tipo de madera ideal
-          según tu tipo de espacio y estilo — sin necesidad de llamar a un especialista.
+          El próximo ciclo abre pronto. Estás en lista de espera — serás la primera en enterarte
+          cuando los cupos estén disponibles.
         </p>
       </div>
 
@@ -96,7 +96,7 @@ onMounted(() => {
         <RouterLink to="/politicas-privacidad">Política de Privacidad</RouterLink>
         <RouterLink to="/aviso-legal">Aviso Legal</RouterLink>
       </nav>
-      <p class="nospace__footer-copy">© {{ new Date().getFullYear() }} ALE BARRETO. Todos los derechos reservados.</p>
+      <p class="nospace__footer-copy">© {{ new Date().getFullYear() }} LUISA PITA BEJARANO. Todos los derechos reservados.</p>
     </footer>
 
   </div>

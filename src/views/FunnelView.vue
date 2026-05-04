@@ -3,7 +3,9 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import RegistrationModal from '@/components/RegistrationModal.vue'
 import { captureFbParams } from '@/utils/fbclid'
-import alePhoto from '@/assets/team/ale-barreto.png'
+const CDN = 'https://res.cloudinary.com/dkosgkjpq/image/upload'
+const LUISA_AUTHORITY = `${CDN}/w_560,h_700,c_fill,g_face,q_auto,f_auto/luisa-pita/luisa-11.jpg`
+const LUISA_VSL = `${CDN}/w_1280,h_720,c_fill,g_face,q_auto,f_auto/luisa-pita/luisa-2.jpg`
 
 const router = useRouter()
 const modalOpen = ref(false)
@@ -11,7 +13,7 @@ const IS_DEV = window.location.hostname === 'localhost'
 
 const openModal = () => {
   if (!IS_DEV) {
-    const disqAt = localStorage.getItem('os_disq_at')
+    const disqAt = localStorage.getItem('lpb_disq_at')
     if (disqAt && Date.now() - Number(disqAt) < 24 * 60 * 60 * 1000) {
       router.push('/sin-espacio')
       return
@@ -22,47 +24,47 @@ const openModal = () => {
 
 const stats = [
   {
-    icon: 'fa-solid fa-tree',
-    number: '15+',
-    text: 'Años trabajando con maderas nobles y certificadas',
+    icon: 'fa-solid fa-users',
+    number: '200+',
+    text: 'Mujeres transformadas con el programa',
   },
   {
-    icon: 'fa-solid fa-house-chimney',
-    number: '500+',
-    text: 'Proyectos residenciales y comerciales entregados',
+    icon: 'fa-solid fa-calendar-check',
+    number: '8',
+    text: 'Semanas para resultados reales y duraderos',
   },
   {
-    icon: 'fa-solid fa-award',
-    number: '100%',
-    text: 'Compromiso con la calidad artesanal y diseño premium',
+    icon: 'fa-solid fa-heart-pulse',
+    number: '97%',
+    text: 'Tasa de éxito sin efecto rebote',
   },
 ]
 
 const pillars = [
-  'Sin materiales de baja calidad que se deterioran rápido',
-  'Sin diseños genéricos que no aprovechan tu espacio',
-  'Sin retrasos en la entrega de tu proyecto',
-  'Con maderas seleccionadas y procesos de secado óptimos',
+  'Sin dietas restrictivas que te hacen sufrir y abandonar',
+  'Sin rutinas de 2 horas imposibles para tu agenda',
+  'Sin el efecto rebote de siempre',
+  'Con un plan personalizado que funciona para mujeres ocupadas',
 ]
 
 const methodology = [
   {
     num: '01',
-    icon: 'fa-solid fa-pencil-ruler',
-    title: 'Diseño Conceptual y 3D',
-    body: 'Visualizamos tu proyecto antes de cortar la primera pieza. Planificación al detalle para resultados perfectos.',
+    icon: 'fa-solid fa-clipboard-list',
+    title: 'Evaluación Personalizada',
+    body: 'Analizamos tu historial, metabolismo y rutina diaria para crear un plan 100% adaptado a ti y tu estilo de vida.',
   },
   {
     num: '02',
-    icon: 'fa-solid fa-hammer',
-    title: 'Fabricación Artesanal',
-    body: 'Cada pieza es tratada por manos expertas, utilizando técnicas tradicionales y tecnología de punta.',
+    icon: 'fa-solid fa-bowl-food',
+    title: 'Plan Nutricional Flexible',
+    body: 'Nada de prohibiciones. Aprendes a comer de forma inteligente, sin pasar hambre, encajando en tu vida real.',
   },
   {
     num: '03',
-    icon: 'fa-solid fa-truck-ramp-box',
-    title: 'Instalación y Acabado',
-    body: 'Nos encargamos de todo el proceso hasta que el último detalle esté en su lugar, con limpieza y precisión.',
+    icon: 'fa-solid fa-fire-flame-curved',
+    title: 'Movimiento Eficiente',
+    body: 'Rutinas de 20-30 minutos diseñadas para mujeres ocupadas. Máximos resultados con el mínimo tiempo disponible.',
   },
 ]
 
@@ -92,7 +94,7 @@ onUnmounted(() => clearInterval(interval))
 
     <!-- TOP BAR -->
     <header class="funnel__topbar">
-      <h2 class="funnel__logo-text">ALE BARRETO</h2>
+      <h2 class="funnel__logo-text">LUISA PITA BEJARANO</h2>
     </header>
 
     <!-- URGENCY BANNER -->
@@ -112,15 +114,16 @@ onUnmounted(() => clearInterval(interval))
     <section class="funnel__hero" aria-labelledby="funnel-headline">
       <div class="funnel__container">
 
+
         <p class="funnel__eyebrow">
-          <i class="fa-solid fa-tree" aria-hidden="true"></i>
-          Expertos en Madera y Diseño de Interiores
+          <i class="fa-solid fa-heart-pulse" aria-hidden="true"></i>
+          Programa de Transformación para Mujeres Ocupadas
         </p>
 
         <h1 id="funnel-headline" class="funnel__headline">
-          Transforma tu hogar con la
-          <span class="funnel__headline-accent">calidez y elegancia de la madera</span>
-          de alta gama
+          Baja 8 kilos en 8 semanas
+          <span class="funnel__headline-accent">sin efecto rebote</span>
+          — aunque ya lo hayas intentado antes
         </h1>
 
         <ul class="funnel__pillars" role="list">
@@ -134,14 +137,21 @@ onUnmounted(() => clearInterval(interval))
         <div class="funnel__vsl-wrap">
           <div class="funnel__vsl" @click="openModal()" role="button" aria-label="Ver video" tabindex="0">
             <div class="funnel__vsl-bg">
-              <img src="https://fast.wistia.com/embed/medias/5ql8l131me/swatch" class="funnel__vsl-thumb" alt="Vista previa video" />
-              <div class="funnel__vsl-blur-overlay"></div>
+              <img :src="LUISA_VSL" class="funnel__vsl-thumb" alt="Luisa Pita Bejarano — Ver el video" />
+              <div class="funnel__vsl-vignette"></div>
             </div>
             <div class="funnel__vsl-overlay">
-              <div class="funnel__vsl-play">
-                <i class="fa-solid fa-play" aria-hidden="true"></i>
+              <div class="funnel__vsl-play-wrap">
+                <div class="funnel__vsl-play">
+                  <i class="fa-solid fa-play" aria-hidden="true"></i>
+                </div>
+                <span class="funnel__vsl-play-label">Ver el video gratis</span>
               </div>
-              <p class="funnel__vsl-caption">Mira el video exclusivo y descubre cómo transformamos tus espacios con madera de alta gama</p>
+              <p class="funnel__vsl-caption">Descubre el método exacto que usaron más de 200 mujeres para bajar 8 kilos en 8 semanas — sin efecto rebote</p>
+            </div>
+            <div class="funnel__vsl-duration" aria-hidden="true">
+              <i class="fa-solid fa-circle-play"></i>
+              Video de 8 min
             </div>
           </div>
         </div>
@@ -149,12 +159,12 @@ onUnmounted(() => clearInterval(interval))
         <!-- CTA -->
         <div class="funnel__cta-wrap">
           <button class="funnel__cta-btn" @click="openModal()">
-            <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
-            AGENDAR ASESORÍA GRATUITA
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            QUIERO MI PLAN PERSONALIZADO
           </button>
           <p class="funnel__cta-sub">
             <i class="fa-solid fa-lock" aria-hidden="true"></i>
-            100% gratuito &nbsp;·&nbsp; Sin compromiso &nbsp;·&nbsp; Cupos limitados
+            Cupos limitados &nbsp;·&nbsp; Sin compromiso &nbsp;·&nbsp; Acceso inmediato
           </p>
         </div>
 
@@ -164,7 +174,7 @@ onUnmounted(() => clearInterval(interval))
     <!-- STATS -->
     <section class="funnel__stats" aria-label="Resultados comprobados">
       <div class="funnel__container">
-        <p class="funnel__section-label funnel__section-label--light">Resultados reales — clientes reales</p>
+        <p class="funnel__section-label funnel__section-label--light">Resultados reales — mujeres reales</p>
         <div class="funnel__stats-grid">
           <div v-for="stat in stats" :key="stat.number" class="funnel__stat">
             <div class="funnel__stat-icon" aria-hidden="true">
@@ -182,28 +192,28 @@ onUnmounted(() => clearInterval(interval))
       <div class="funnel__container">
         <p class="funnel__section-label">¿Te identificas con esto?</p>
         <h2 id="problem-heading" class="funnel__section-title">
-          El error que cometen la mayoría de operadores
+          La trampa en la que caen la mayoría de mujeres
         </h2>
         <div class="funnel__problem-grid">
           <div class="funnel__problem-item">
             <i class="fa-solid fa-triangle-exclamation funnel__problem-icon" aria-hidden="true"></i>
             <div>
-              <strong>Usan maderas sin tratar</strong>
-              <p>El uso de madera "verde" o sin el secado adecuado provoca torceduras y grietas a los pocos meses de instalación.</p>
+              <strong>Dietas que duran 2 semanas</strong>
+              <p>Restricción extrema → hambre → ansiedad → abandono → culpa. El ciclo de siempre que nunca lleva a resultados duraderos.</p>
             </div>
           </div>
           <div class="funnel__problem-item">
             <i class="fa-solid fa-triangle-exclamation funnel__problem-icon" aria-hidden="true"></i>
             <div>
-              <strong>Diseños poco funcionales</strong>
-              <p>Muebles que se ven bien pero no aprovechan el espacio o no resisten el uso diario en el hogar u oficina.</p>
+              <strong>Rutinas de gym imposibles</strong>
+              <p>Planes diseñados para personas con 2 horas libres al día. Si tienes trabajo, familia y responsabilidades, simplemente no encajan.</p>
             </div>
           </div>
           <div class="funnel__problem-item">
             <i class="fa-solid fa-triangle-exclamation funnel__problem-icon" aria-hidden="true"></i>
             <div>
-              <strong>Acabados de baja calidad</strong>
-              <p>Barnices y selladores que se pelan o pierden su brillo rápido, obligando a mantenimientos costosos y frecuentes.</p>
+              <strong>El efecto rebote inevitable</strong>
+              <p>Bajas kilos rápido y los recuperas todos en pocas semanas. No es falta de voluntad — es que el método estaba mal desde el principio.</p>
             </div>
           </div>
         </div>
@@ -213,9 +223,9 @@ onUnmounted(() => clearInterval(interval))
     <!-- METODOLOGÍA -->
     <section class="funnel__method" aria-labelledby="method-heading">
       <div class="funnel__container">
-        <p class="funnel__section-label">Nuestra metodología de asesoría</p>
+        <p class="funnel__section-label">Cómo funciona el programa</p>
         <h2 id="method-heading" class="funnel__section-title">
-          Tres pilares que protegen tu operación
+          Tres pilares que garantizan resultados sin rebote
         </h2>
         <div class="funnel__method-grid">
           <div v-for="m in methodology" :key="m.num" class="funnel__method-card">
@@ -233,47 +243,48 @@ onUnmounted(() => clearInterval(interval))
     <!-- TESTIMONIAL -->
     <section class="funnel__testimonial" aria-labelledby="testimonial-heading">
       <div class="funnel__container">
-        <p class="funnel__section-label">Lo que dicen nuestros clientes</p>
+        <p class="funnel__section-label">Lo que dicen nuestras alumnas</p>
         <div class="funnel__testimonial-card">
           <i class="fa-solid fa-quote-left funnel__testimonial-quote" aria-hidden="true"></i>
           <blockquote class="funnel__testimonial-text">
-            "Ale logró captar exactamente lo que queríamos para nuestra oficina. 
-            La calidez de la madera y la precisión de los acabados han transformado por completo el ambiente de trabajo."
+            "Llevaba años intentando bajar de peso con dietas de moda y siempre recuperaba todo en dos meses.
+            Con el programa de Luisa bajé 9 kilos en 8 semanas y lo más increíble es que ya van 6 meses y los mantuve.
+            Por fin entendí cómo funciona mi cuerpo."
           </blockquote>
           <footer class="funnel__testimonial-author">
             <div class="funnel__testimonial-avatar" aria-hidden="true">
               <i class="fa-solid fa-user"></i>
             </div>
             <div>
-              <strong>Directora de Diseño</strong>
-              <span>Estudio Arquitectónico Independiente</span>
+              <strong>Madre de familia, ejecutiva</strong>
+              <span>Participante del programa — 9 kg menos, sin rebote</span>
             </div>
           </footer>
         </div>
       </div>
     </section>
 
-    <!-- AUTHORITY — Ale Barreto -->
+    <!-- AUTHORITY — Luisa Pita Bejarano -->
     <section class="funnel__authority" aria-labelledby="authority-heading">
       <div class="funnel__container funnel__authority-inner">
         <div class="funnel__authority-photo-wrap">
-          <div class="funnel__authority-avatar" aria-hidden="true">
-            <img :src="alePhoto" alt="Ale Barreto" class="funnel__authority-img" />
+          <div class="funnel__authority-photo-frame">
+            <img :src="LUISA_AUTHORITY" alt="Luisa Pita Bejarano" class="funnel__authority-img" loading="lazy" />
           </div>
         </div>
         <div class="funnel__authority-content">
-          <p class="funnel__authority-eyebrow">Tu especialista asignada</p>
-          <h2 id="authority-heading" class="funnel__authority-name">Ale Barreto</h2>
-          <p class="funnel__authority-role">Experta en Diseño y Construcción en Madera</p>
+          <p class="funnel__authority-eyebrow">Tu coach de transformación</p>
+          <h2 id="authority-heading" class="funnel__authority-name">Luisa Pita Bejarano</h2>
+          <p class="funnel__authority-role">Coach de Transformación Corporal para Mujeres Ocupadas</p>
           <p class="funnel__authority-bio">
-            Con años de experiencia en el mercado ecuatoriano, me especializo en crear
-            espacios que combinan la nobleza de la madera con diseños modernos y funcionales.
-            Mi objetivo es que cada proyecto sea una inversión que dure toda la vida.
+            Especializada en ayudar a mujeres adultas ocupadas a perder grasa y tonificar su cuerpo
+            sin dietas imposibles ni rutinas que no encajan en su vida real.
+            Mi método elimina el efecto rebote porque ataca la causa raíz, no los síntomas.
           </p>
           <ul class="funnel__authority-creds" role="list">
-            <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i> Especialista en maderas nobles y tratadas</li>
-            <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i> Diseños exclusivos a medida</li>
-            <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i> Gestión integral: del plano a la instalación</li>
+            <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i> Especialista en nutrición y hábitos sostenibles</li>
+            <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i> Método comprobado: 8 kilos en 8 semanas sin rebote</li>
+            <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i> Más de 200 mujeres transformadas con resultados duraderos</li>
           </ul>
         </div>
       </div>
@@ -283,19 +294,19 @@ onUnmounted(() => clearInterval(interval))
     <section class="funnel__cta-final" aria-labelledby="cta-final-heading">
       <div class="funnel__container">
         <h2 id="cta-final-heading" class="funnel__cta-final-title">
-          ¿Listo para iniciar tu proyecto?
+          ¿Lista para tu transformación?
         </h2>
         <p class="funnel__cta-final-sub">
-          Agenda una asesoría gratuita de 15 minutos. Conversaremos sobre tu idea,
-          el espacio disponible y te daremos una primera visión técnica y estética.
+          Accede al video y descubre el método exacto que usaron más de 200 mujeres para bajar 8 kilos
+          en 8 semanas — sin pasar hambre, sin rutinas imposibles y sin efecto rebote.
         </p>
         <button class="funnel__cta-btn" @click="openModal()">
-          <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
-          AGENDAR CONSULTA TÉCNICA GRATIS
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          QUIERO MI PLAN PERSONALIZADO
         </button>
         <p class="funnel__cta-sub">
           <i class="fa-solid fa-lock" aria-hidden="true"></i>
-          100% gratuito &nbsp;·&nbsp; Sin compromiso &nbsp;·&nbsp; Cupos limitados
+          Cupos limitados &nbsp;·&nbsp; Acceso inmediato &nbsp;·&nbsp; Sin compromiso
         </p>
       </div>
     </section>
@@ -303,13 +314,13 @@ onUnmounted(() => clearInterval(interval))
     <!-- FOOTER -->
     <footer class="funnel__footer">
       <div class="funnel__container funnel__footer-inner">
-        <h2 class="funnel__footer-logo-text">ALE BARRETO</h2>
+        <h2 class="funnel__footer-logo-text">LUISA PITA BEJARANO</h2>
         <nav class="funnel__footer-links" aria-label="Legal">
           <RouterLink to="/politicas-privacidad">Política de Privacidad</RouterLink>
           <RouterLink to="/aviso-legal">Aviso Legal</RouterLink>
         </nav>
         <p class="funnel__footer-copy">
-          © {{ new Date().getFullYear() }} ALE BARRETO. Todos los derechos reservados.
+          © {{ new Date().getFullYear() }} LUISA PITA BEJARANO. Todos los derechos reservados.
         </p>
       </div>
     </footer>
@@ -340,14 +351,14 @@ onUnmounted(() => clearInterval(interval))
 // ── Top bar ──────────────────────────────────────────────────────────────────
 .funnel__topbar {
   background: #ffffff;
-  border-bottom: 1px solid #E8EDF5;
+  border-bottom: 1px solid #D1FAE5;
   padding: 0.9rem 1.5rem;
   display: flex;
   justify-content: center;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 1px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 12px rgba(22, 199, 132, 0.06);
 }
 
 .funnel__logo {
@@ -405,18 +416,24 @@ onUnmounted(() => clearInterval(interval))
 // ── Hero ─────────────────────────────────────────────────────────────────────
 .funnel__hero {
   padding: 3.5rem 0 3rem;
-  background: linear-gradient(180deg, #EEF4FF 0%, #ffffff 70%);
+  background: linear-gradient(180deg, #F0FFF8 0%, #ffffff 70%);
+  text-align: center;
+
+  .funnel__eyebrow { margin-left: auto; margin-right: auto; }
+  .funnel__pillars { justify-content: center; }
+  .funnel__cta-wrap { align-items: center; }
 }
+
 
 .funnel__eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(colors.$OS-NAVY, 0.06);
-  border: 1px solid rgba(colors.$OS-NAVY, 0.14);
+  background: rgba(colors.$OS-RED, 0.06);
+  border: 1px solid rgba(colors.$OS-RED, 0.14);
   border-radius: 999px;
   padding: 0.35rem 0.85rem;
-  color: colors.$OS-NAVY;
+  color: colors.$OS-RED;
   font-family: fonts.$font-interface;
   font-size: 0.78rem;
   font-weight: 700;
@@ -441,7 +458,7 @@ onUnmounted(() => clearInterval(interval))
   width: 100%;
   border-radius: 24px;
   overflow: hidden;
-  border: 1px solid rgba(colors.$AB-WOOD, 0.2);
+  border: 1px solid rgba(colors.$OS-RED, 0.2);
   box-shadow: 0 40px 100px -20px rgba(0,0,0,0.4);
   background: #000;
   line-height: 0;
@@ -475,7 +492,11 @@ onUnmounted(() => clearInterval(interval))
 }
 
 // ── VSL ──────────────────────────────────────────────────────────────────────
-.funnel__vsl-wrap { margin-bottom: 2rem; }
+.funnel__vsl-wrap {
+  margin: 2rem auto;
+  max-width: 760px;
+  width: 100%;
+}
 
 .funnel__vsl {
   position: relative;
@@ -484,16 +505,16 @@ onUnmounted(() => clearInterval(interval))
   border-radius: 16px;
   overflow: hidden;
   cursor: pointer;
-  border: 2px solid #D8E6F5;
-  box-shadow: 0 8px 40px rgba(0, 63, 125, 0.12);
+  border: 2px solid rgba(colors.$OS-RED, 0.2);
+  box-shadow: 0 8px 40px rgba(22, 199, 132, 0.12);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 16px 48px rgba(0, 63, 125, 0.2);
+    box-shadow: 0 16px 48px rgba(22, 199, 132, 0.2);
   }
   &:focus-visible {
-    outline: 3px solid colors.$OS-BLUE;
+    outline: 3px solid colors.$OS-RED;
     outline-offset: 2px;
   }
 }
@@ -501,10 +522,7 @@ onUnmounted(() => clearInterval(interval))
 .funnel__vsl-bg {
   position: absolute;
   inset: 0;
-  background: colors.$OS-NAVY;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: #0D1117;
 }
 
 .funnel__vsl-thumb {
@@ -513,30 +531,24 @@ onUnmounted(() => clearInterval(interval))
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: blur(8px) brightness(0.6);
-  transform: scale(1.1); // Avoid white edges from blur
-  transition: filter 0.4s ease, transform 0.4s ease, brightness 0.4s ease;
+  object-position: center top;
+  filter: brightness(0.82);
+  transform: scale(1.02);
+  transition: transform 0.5s ease, filter 0.4s ease;
 
   .funnel__vsl:hover & {
-    filter: blur(4px) brightness(0.75);
     transform: scale(1.05);
+    filter: brightness(0.9);
   }
 }
 
-.funnel__vsl-blur-overlay {
+.funnel__vsl-vignette {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(colors.$OS-NAVY, 0.2) 0%, rgba(colors.$OS-NAVY, 0.6) 100%);
+  background:
+    radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.55) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 30%, transparent 60%, rgba(0,0,0,0.65) 100%);
   z-index: 1;
-}
-
-.funnel__vsl-watermark {
-  position: relative;
-  z-index: 2;
-  height: 60px;
-  width: auto;
-  opacity: 0.15;
-  filter: brightness(0) invert(1);
 }
 
 .funnel__vsl-overlay {
@@ -546,37 +558,82 @@ onUnmounted(() => clearInterval(interval))
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.25rem;
+  gap: 1rem;
+  z-index: 2;
+}
+
+.funnel__vsl-play-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  transition: transform 0.2s ease;
+  .funnel__vsl:hover & { transform: scale(1.06); }
 }
 
 .funnel__vsl-play {
-  width: 76px;
-  height: 76px;
+  width: 88px;
+  height: 88px;
   border-radius: 50%;
-  background: #ffffff;
+  background: colors.$OS-RED;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
-  transition: transform 0.2s ease;
+  box-shadow: 0 0 0 8px rgba(22, 199, 132, 0.25), 0 8px 32px rgba(0, 0, 0, 0.4);
+  transition: box-shadow 0.3s ease;
 
-  .funnel__vsl:hover & { transform: scale(1.1); }
+  .funnel__vsl:hover & {
+    box-shadow: 0 0 0 14px rgba(22, 199, 132, 0.2), 0 12px 40px rgba(0, 0, 0, 0.5);
+  }
 
   i {
-    color: colors.$OS-RED;
-    font-size: 1.7rem;
-    margin-left: 5px;
+    color: #ffffff;
+    font-size: 2rem;
+    margin-left: 6px;
   }
 }
 
-.funnel__vsl-caption {
+.funnel__vsl-play-label {
   color: #ffffff;
-  font-size: 0.88rem;
+  font-family: fonts.$font-interface;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+  background: rgba(22, 199, 132, 0.85);
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+}
+
+.funnel__vsl-caption {
+  color: rgba(#ffffff, 0.92);
+  font-size: 0.86rem;
   font-weight: 600;
   text-align: center;
-  padding: 0 2rem;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
-  max-width: 420px;
+  padding: 0 1.5rem;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7);
+  max-width: 380px;
+  line-height: 1.45;
+}
+
+.funnel__vsl-duration {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(4px);
+  color: rgba(#ffffff, 0.9);
+  font-family: fonts.$font-interface;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.28rem 0.65rem;
+  border-radius: 999px;
+  i { font-size: 0.7rem; color: colors.$OS-RED; }
 }
 
 // ── CTA ──────────────────────────────────────────────────────────────────────
@@ -605,12 +662,12 @@ onUnmounted(() => clearInterval(interval))
   width: 100%;
   max-width: 480px;
   transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 20px rgba(204, 0, 0, 0.35);
+  box-shadow: 0 4px 20px rgba(22, 199, 132, 0.35);
 
   &:hover {
-    background: #AA0000;
+    background: darken(#16C784, 8%);
     transform: translateY(-1px);
-    box-shadow: 0 8px 28px rgba(204, 0, 0, 0.45);
+    box-shadow: 0 8px 28px rgba(22, 199, 132, 0.45);
   }
   &:active { transform: translateY(0); }
 }
@@ -705,8 +762,8 @@ onUnmounted(() => clearInterval(interval))
   gap: 1rem;
   align-items: flex-start;
   padding: 1.25rem;
-  background: #F9FBFF;
-  border: 1px solid #E4EDF7;
+  background: #F0FFF8;
+  border: 1px solid #D1FAE5;
   border-radius: 12px;
 
   strong {
@@ -734,7 +791,7 @@ onUnmounted(() => clearInterval(interval))
 // ── Methodology ──────────────────────────────────────────────────────────────
 .funnel__method {
   padding: 4rem 0;
-  background: #F5F8FF;
+  background: colors.$LPB-LIGHT;
 }
 
 .funnel__method-grid {
@@ -746,11 +803,11 @@ onUnmounted(() => clearInterval(interval))
 
 .funnel__method-card {
   background: #ffffff;
-  border: 1px solid #E4EDF7;
+  border: 1px solid #D1FAE5;
   border-radius: 16px;
   padding: 1.75rem 1.5rem;
   position: relative;
-  box-shadow: 0 2px 12px rgba(0, 63, 125, 0.05);
+  box-shadow: 0 2px 12px rgba(22, 199, 132, 0.05);
 }
 
 .funnel__method-num {
@@ -768,7 +825,7 @@ onUnmounted(() => clearInterval(interval))
   width: 44px;
   height: 44px;
   border-radius: 10px;
-  background: colors.$OS-NAVY;
+  background: colors.$OS-RED;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -797,19 +854,19 @@ onUnmounted(() => clearInterval(interval))
 }
 
 .funnel__testimonial-card {
-  background: #F5F8FF;
-  border: 1px solid rgba(colors.$OS-NAVY, 0.1);
-  border-left: 4px solid colors.$OS-NAVY;
+  background: #F0FFF8;
+  border: 1px solid rgba(colors.$OS-RED, 0.1);
+  border-left: 4px solid colors.$OS-RED;
   border-radius: 16px;
   padding: 2rem;
   max-width: 720px;
   margin: 0 auto;
-  box-shadow: 0 4px 24px rgba(0, 63, 125, 0.07);
+  box-shadow: 0 4px 24px rgba(22, 199, 132, 0.07);
 }
 
 .funnel__testimonial-quote {
   font-size: 2.2rem;
-  color: rgba(colors.$OS-NAVY, 0.12);
+  color: rgba(colors.$OS-RED, 0.12);
   display: block;
   margin-bottom: 0.75rem;
   line-height: 1;
@@ -836,7 +893,7 @@ onUnmounted(() => clearInterval(interval))
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: colors.$OS-NAVY;
+  background: colors.$OS-RED;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -847,9 +904,9 @@ onUnmounted(() => clearInterval(interval))
 // ── Authority ────────────────────────────────────────────────────────────────
 .funnel__authority {
   padding: 4rem 0;
-  background: linear-gradient(135deg, #EEF4FF 0%, #F9FBFF 100%);
-  border-top: 1px solid #E4EDF7;
-  border-bottom: 1px solid #E4EDF7;
+  background: linear-gradient(135deg, #F0FFF8 0%, #F0FFF8 100%);
+  border-top: 1px solid #D1FAE5;
+  border-bottom: 1px solid #D1FAE5;
 }
 
 .funnel__authority-inner {
@@ -859,25 +916,26 @@ onUnmounted(() => clearInterval(interval))
   @media (max-width: 640px) { flex-direction: column; align-items: center; }
 }
 
-.funnel__authority-photo-wrap { flex-shrink: 0; }
+.funnel__authority-photo-wrap {
+  flex-shrink: 0;
+  @media (max-width: 640px) { width: 100%; }
+}
 
-.funnel__authority-avatar {
-  width: 112px;
-  height: 112px;
-  border-radius: 50%;
-  background: colors.$OS-NAVY;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 4px solid #ffffff;
-  box-shadow: 0 4px 20px rgba(0, 63, 125, 0.2);
+.funnel__authority-photo-frame {
+  width: 260px;
+  border-radius: 20px;
   overflow: hidden;
+  box-shadow: 0 20px 60px rgba(22, 199, 132, 0.2), 0 4px 16px rgba(0,0,0,0.06);
+  border: 3px solid rgba(22, 199, 132, 0.12);
+  @media (max-width: 640px) { width: 100%; max-width: 280px; margin: 0 auto; }
 }
 
 .funnel__authority-img {
   width: 100%;
-  height: 100%;
+  height: 340px;
   object-fit: cover;
+  object-position: top center;
+  display: block;
 }
 
 .funnel__authority-content { flex: 1; }
@@ -928,7 +986,7 @@ onUnmounted(() => clearInterval(interval))
     gap: 0.5rem;
     font-size: 0.86rem;
     color: #3A4F6A;
-    i { color: colors.$OS-BLUE; font-size: 0.82rem; flex-shrink: 0; }
+    i { color: colors.$OS-RED; font-size: 0.82rem; flex-shrink: 0; }
   }
 }
 
@@ -943,8 +1001,8 @@ onUnmounted(() => clearInterval(interval))
   .funnel__cta-btn {
     margin: 0 auto 1rem;
     background: colors.$OS-RED;
-    box-shadow: 0 4px 24px rgba(204, 0, 0, 0.4);
-    &:hover { background: #AA0000; }
+    box-shadow: 0 4px 24px rgba(22, 199, 132, 0.4);
+    &:hover { background: darken(#16C784, 8%); }
   }
 
   .funnel__cta-sub { color: rgba(#ffffff, 0.5); }

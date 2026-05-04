@@ -50,8 +50,8 @@ onMounted(() => {
     </h1>
     
     <p class="booked-hero__subtitle animate-up">
-      En breve recibirás un correo con todos los detalles. Un miembro del equipo de
-      Bakano te contactará para ayudarte a romperla en tu negocio.
+      En breve recibirás un correo con todos los detalles. Luisa te contactará
+      para acompañarte en cada paso de tu transformación de 8 semanas.
     </p>
   </section>
 </template>
@@ -78,12 +78,12 @@ onMounted(() => {
     width: 68px;
     height: 68px;
     border-radius: 50%;
-    background: rgba(colors.$BAKANO-GREEN, 0.08);
+    background: rgba(colors.$LPB-PINK, 0.08);
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid rgba(colors.$BAKANO-GREEN, 0.3);
-    box-shadow: 0 0 30px rgba(colors.$BAKANO-GREEN, 0.1);
+    border: 2px solid rgba(colors.$LPB-PINK, 0.3);
+    box-shadow: 0 0 30px rgba(colors.$LPB-PINK, 0.1);
     margin-bottom: 0.5rem;
 
     @media (min-width: 768px) {
@@ -95,8 +95,8 @@ onMounted(() => {
 
   &__check-icon {
     font-size: 2.25rem;
-    color: colors.$BAKANO-GREEN;
-    filter: drop-shadow(0 0 12px rgba(colors.$BAKANO-GREEN, 0.5));
+    color: colors.$LPB-PINK;
+    filter: drop-shadow(0 0 12px rgba(colors.$LPB-PINK, 0.5));
 
     @media (min-width: 768px) {
       font-size: 3.25rem;
@@ -108,7 +108,7 @@ onMounted(() => {
     font-size: clamp(1.85rem, 8vw, 3.5rem);
     line-height: 1.1;
     margin: 0;
-    background: linear-gradient(135deg, colors.$white 20%, colors.$BAKANO-PINK 70%, colors.$BAKANO-PURPLE);
+    background: linear-gradient(135deg, colors.$white 20%, colors.$LPB-PINK 70%, colors.$LPB-PURPLE);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

@@ -5,12 +5,11 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const iframeHeight = ref(1100)
 
-// GHL Ale Barreto Calendar URL
-const BASE_URL = 'https://api.leadconnectorhq.com/widget/booking/nCzBqHMNFYGu4rYBREX3'
+const BASE_URL = 'https://api.leadconnectorhq.com/widget/booking/pCSBd5Awq8uAZ3XSlv5H'
 
 const calendarUrl = computed(() => {
   try {
-    const stored = localStorage.getItem('os_contact')
+    const stored = localStorage.getItem('lpb_contact')
     if (!stored) return BASE_URL
     const { nombre, email, phone } = JSON.parse(stored)
     const params = new URLSearchParams()
@@ -26,7 +25,7 @@ const calendarUrl = computed(() => {
 
 const onMessage = (event: MessageEvent) => {
   if (Array.isArray(event.data) && event.data[0] === 'msgsndr-booking-complete') {
-    localStorage.setItem('os_booked_at', String(Date.now()))
+    localStorage.setItem('lpb_booked_at', String(Date.now()))
     router.push('/cita-confirmada')
   }
   if (event.data?.type === 'booking-app' && typeof event.data.height === 'number') {
@@ -36,8 +35,7 @@ const onMessage = (event: MessageEvent) => {
 
 onMounted(() => {
   window.addEventListener('message', onMessage)
-  
-  // Inject GHL form embed script for better iframe handling
+
   if (!document.getElementById('ghl-form-embed-script')) {
     const script = document.createElement('script')
     script.id = 'ghl-form-embed-script'
@@ -55,7 +53,7 @@ onUnmounted(() => window.removeEventListener('message', onMessage))
 
     <!-- TOP BAR -->
     <header class="booking__topbar">
-      <h2 class="booking__logo-text">ALE BARRETO</h2>
+      <h2 class="booking__logo-text">LUISA PITA BEJARANO</h2>
     </header>
 
     <main class="booking__main">
@@ -80,15 +78,15 @@ onUnmounted(() => window.removeEventListener('message', onMessage))
       <!-- Heading -->
       <section class="booking__heading">
         <p class="booking__eyebrow">
-          <i class="fa-solid fa-tree" aria-hidden="true"></i>
-          Casi listo
+          <i class="fa-solid fa-heart-pulse" aria-hidden="true"></i>
+          Casi lista
         </p>
         <h1 class="booking__title">
           Elige el horario de tu
-          <span class="booking__title-accent">asesoría de diseño</span>
+          <span class="booking__title-accent">sesión de transformación</span>
         </h1>
         <p class="booking__subtitle">
-          Una sesión de 15 minutos con Ale Barreto para conversar sobre tu proyecto y definir los siguientes pasos.
+          Una sesión personalizada con Luisa Pita para evaluar tu situación y diseñar juntas tu plan de 8 semanas.
         </p>
       </section>
 
@@ -97,11 +95,11 @@ onUnmounted(() => window.removeEventListener('message', onMessage))
         <iframe
           :src="calendarUrl"
           :style="{ height: iframeHeight + 'px' }"
-          title="Agenda tu asesoría con Ale Barreto"
+          title="Agenda tu sesión con Luisa Pita Bejarano"
           class="calendar__iframe"
           frameborder="0"
           scrolling="no"
-          id="nCzBqHMNFYGu4rYBREX3_1776870418706"
+          id="pCSBd5Awq8uAZ3XSlv5H_1"
         ></iframe>
       </div>
 
@@ -113,7 +111,7 @@ onUnmounted(() => window.removeEventListener('message', onMessage))
         <RouterLink to="/politicas-privacidad">Política de Privacidad</RouterLink>
         <RouterLink to="/aviso-legal">Aviso Legal</RouterLink>
       </nav>
-      <p class="booking__footer-copy">© {{ new Date().getFullYear() }} ALE BARRETO. Todos los derechos reservados.</p>
+      <p class="booking__footer-copy">© {{ new Date().getFullYear() }} LUISA PITA BEJARANO. Todos los derechos reservados.</p>
     </footer>
 
   </div>
@@ -133,20 +131,23 @@ onUnmounted(() => window.removeEventListener('message', onMessage))
 
 .booking__topbar {
   background: #ffffff;
-  border-bottom: 1px solid #E8EDF5;
+  border-bottom: 1px solid #D1FAE5;
   padding: 0.9rem 1.5rem;
   display: flex;
   justify-content: center;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 8px rgba(22, 199, 132, 0.05);
 }
 
-.booking__logo {
-  height: 36px;
-  width: auto;
-  object-fit: contain;
+.booking__logo-text {
+  font-family: fonts.$font-principal;
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  color: colors.$OS-DARK;
+  margin: 0;
 }
 
 .booking__main {
@@ -236,7 +237,7 @@ onUnmounted(() => window.removeEventListener('message', onMessage))
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: colors.$OS-NAVY;
+  color: colors.$OS-RED;
   margin: 0 0 0.75rem;
   i { font-size: 0.75rem; }
 }
@@ -265,8 +266,8 @@ onUnmounted(() => window.removeEventListener('message', onMessage))
 .calendar__wrap {
   border-radius: 16px;
   overflow: hidden;
-  border: 1px solid #E4EDF7;
-  box-shadow: 0 4px 24px rgba(0, 63, 125, 0.07);
+  border: 1px solid #D1FAE5;
+  box-shadow: 0 4px 24px rgba(22, 199, 132, 0.07);
 }
 
 .calendar__iframe {

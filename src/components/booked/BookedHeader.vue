@@ -1,46 +1,35 @@
 <script setup lang="ts">
-/**
- * BookedHeader.vue
- * Dedicated top bar for the confirmation page.
- */
-const LOGO = 'https://res.cloudinary.com/dpuody0df/image/upload/v1775587085/bakano/logos/bakano-light.png';
 </script>
 
 <template>
   <header class="booked-header">
-    <img :src="LOGO" alt="Bakano" class="booked-header__logo" />
+    <h2 class="booked-header__logo-text">LUISA PITA BEJARANO</h2>
   </header>
 </template>
 
 <style lang="scss" scoped>
 @use '@/styles/colorVariables.module.scss' as colors;
+@use '@/styles/fonts.modules.scss' as fonts;
 
 .booked-header {
   width: 100%;
-  padding: 1.25rem 1rem;
+  padding: 0.9rem 1.5rem;
   display: flex;
   justify-content: center;
-  background: rgba(#0a0712, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(colors.$BAKANO-PURPLE, 0.15);
+  background: #ffffff;
+  border-bottom: 1px solid #D1FAE5;
   position: sticky;
   top: 0;
   z-index: 100;
+  box-shadow: 0 1px 8px rgba(22, 199, 132, 0.05);
 
-  &__logo {
-    height: 26px;
-    width: auto;
-    filter: drop-shadow(0 0 12px rgba(colors.$BAKANO-PINK, 0.2));
-    transition: transform 0.3s ease;
-
-    &:hover {
-      transform: scale(1.05);
-    }
-
-    @media (min-width: 768px) {
-      height: 32px;
-    }
+  &__logo-text {
+    font-family: fonts.$font-principal;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    color: colors.$LPB-DARK;
+    margin: 0;
   }
 }
 </style>

@@ -4,7 +4,7 @@ import { ref, computed, onMounted } from 'vue'
 // ── Contact name from localStorage ───────────────────────────────────────────
 const contactName = computed(() => {
   try {
-    const stored = localStorage.getItem('os_contact')
+    const stored = localStorage.getItem('lpb_contact')
     if (!stored) return ''
     return JSON.parse(stored).nombre ?? ''
   } catch { return '' }
@@ -12,12 +12,12 @@ const contactName = computed(() => {
 
 // ── Fire fbq CompleteRegistration once ───────────────────────────────────────
 onMounted(() => {
-  const alreadyFired = sessionStorage.getItem('os_complete_fired')
+  const alreadyFired = sessionStorage.getItem('lpb_complete_fired')
   if (!alreadyFired) {
     ;(window as any).fbq?.('track', 'CompleteRegistration', {
-      content_name: 'consulta-agendada',
+      content_name: 'cita-lpb',
     })
-    sessionStorage.setItem('os_complete_fired', '1')
+    sessionStorage.setItem('lpb_complete_fired', '1')
   }
 })
 
@@ -25,17 +25,17 @@ const nextSteps = [
   {
     icon: 'fa-solid fa-envelope',
     title: 'Revisa tu email',
-    body: 'Te enviamos la confirmación con todos los detalles de tu asesoría de diseño.',
+    body: 'Te enviamos la confirmación con todos los detalles de tu sesión de transformación.',
   },
   {
-    icon: 'fa-brands fa-whatsapp',
-    title: 'Te contactamos por WhatsApp',
-    body: 'Ale Barreto te escribirá para confirmar la cita y conocer un poco más sobre tu idea.',
+    icon: 'fa-solid fa-calendar-check',
+    title: 'Prepárate para la sesión',
+    body: 'Luisa revisará tu caso antes de la llamada para que el tiempo sea 100% tuyo.',
   },
   {
-    icon: 'fa-solid fa-tree',
-    title: 'Prepara tu inspiración',
-    body: 'Ten a mano referencias o ideas de lo que te gustaría lograr en tu espacio.',
+    icon: 'fa-solid fa-rocket',
+    title: 'Comienza tu transformación',
+    body: 'En la sesión diseñarán juntas tu plan personalizado de 8 semanas sin efecto rebote.',
   },
 ]
 </script>
@@ -45,7 +45,7 @@ const nextSteps = [
 
     <!-- TOP BAR -->
     <header class="booked__topbar">
-      <h2 class="booked__logo-text">ALE BARRETO</h2>
+      <h2 class="booked__logo-text">LUISA PITA BEJARANO</h2>
     </header>
 
     <main class="booked__main">
@@ -60,12 +60,12 @@ const nextSteps = [
             ¡Listo, {{ contactName }}!
           </template>
           <template v-else>
-            ¡Tu consulta está confirmada!
+            ¡Tu sesión está confirmada!
           </template>
         </h1>
         <p class="booked__hero-subtitle">
-          Tu asesoría de diseño con Ale Barreto ha sido agendada correctamente.
-          En breve recibirás todos los detalles.
+          Tu sesión de transformación con Luisa Pita Bejarano ha sido agendada correctamente.
+          En breve recibirás todos los detalles en tu email.
         </p>
       </section>
 
@@ -84,18 +84,18 @@ const nextSteps = [
         </div>
       </section>
 
-      <!-- Team card — Ale Barreto -->
+      <!-- Team card — Luisa Pita Bejarano -->
       <section class="booked__team" aria-labelledby="team-heading">
-        <p id="team-heading" class="booked__team-label">Tu especialista</p>
+        <p id="team-heading" class="booked__team-label">Tu coach</p>
         <div class="booked__team-card">
           <div class="booked__team-avatar" aria-hidden="true">
-            <i class="fa-solid fa-user-tie"></i>
+            <img src="https://res.cloudinary.com/dkosgkjpq/image/upload/w_200,h_200,c_fill,g_face,q_auto,f_auto/luisa-pita/luisa-8.jpg" alt="Luisa Pita Bejarano" />
           </div>
           <div class="booked__team-info">
-            <strong class="booked__team-name">Ale Barreto</strong>
-            <span class="booked__team-role">Experta en Diseño y Construcción en Madera</span>
+            <strong class="booked__team-name">Luisa Pita Bejarano</strong>
+            <span class="booked__team-role">Coach de Transformación Corporal</span>
             <p class="booked__team-note">
-              "La madera no es solo un material — es el alma de un espacio que cuenta una historia."
+              "La transformación real no viene de dietas imposibles — viene de un método que se adapta a tu vida."
             </p>
           </div>
         </div>
@@ -104,7 +104,7 @@ const nextSteps = [
       <!-- Disclaimer -->
       <p class="booked__disclaimer">
         <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
-        Los resultados mencionados en el video corresponden a casos reales. Cada proyecto de diseño y construcción es único y los resultados dependen de las especificaciones y materiales seleccionados.
+        Los resultados mencionados en el video corresponden a casos reales de clientas del programa. Los resultados individuales pueden variar según el punto de partida, constancia y adherencia al plan personalizado.
       </p>
 
     </main>
@@ -114,7 +114,7 @@ const nextSteps = [
         <RouterLink to="/politicas-privacidad">Política de Privacidad</RouterLink>
         <RouterLink to="/aviso-legal">Aviso Legal</RouterLink>
       </nav>
-      <p class="booked__footer-copy">© {{ new Date().getFullYear() }} ALE BARRETO. Todos los derechos reservados.</p>
+      <p class="booked__footer-copy">© {{ new Date().getFullYear() }} LUISA PITA BEJARANO. Todos los derechos reservados.</p>
     </footer>
 
   </div>
@@ -267,17 +267,14 @@ const nextSteps = [
 }
 
 .booked__team-avatar {
-  width: 68px;
-  height: 68px;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
-  background: colors.$OS-NAVY;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
   flex-shrink: 0;
   border: 3px solid #ffffff;
-  box-shadow: 0 3px 12px rgba(0, 63, 125, 0.15);
-  i { color: rgba(#ffffff, 0.85); font-size: 2rem; }
+  box-shadow: 0 3px 12px rgba(22, 199, 132, 0.2);
+  img { width: 100%; height: 100%; object-fit: cover; display: block; }
 }
 
 .booked__team-info {

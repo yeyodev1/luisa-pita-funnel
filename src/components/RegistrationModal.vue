@@ -56,7 +56,6 @@ const form = ref({
   apellido: '',
   email: '',
   phone: '',
-  empresa: '',
 })
 
 const errors = ref<Record<string, string>>({})
@@ -87,7 +86,6 @@ const validators: Record<string, (v: string) => string | null> = {
   apellido: v => v.trim().length < 2 ? 'Ingresa tu apellido' : null,
   email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) ? null : 'Email inválido',
   phone: () => phoneValid.value ? null : 'Número inválido para el país seleccionado',
-  empresa: v => v.trim().length < 2 ? 'Ingresa el nombre de tu proyecto' : null,
 }
 
 const validate = () => {
@@ -136,7 +134,7 @@ const handleClickOutside = (e: MouseEvent) => {
 
 // ── Submit ────────────────────────────────────────────────────────────────────
 const handleSubmit = async () => {
-  touched.value = { nombre: true, apellido: true, email: true, phone: true, empresa: true }
+  touched.value = { nombre: true, apellido: true, email: true, phone: true }
   if (!validate()) return
 
   submitting.value = true
@@ -150,32 +148,31 @@ const handleSubmit = async () => {
     email: form.value.email.trim().toLowerCase(),
     telefono: parsedPhoneE164.value,
     telefonoDisplay: selectedCountry.value.dial + ' ' + formattedPhone.value,
-    empresa: form.value.empresa.trim(),
     pais: selectedCountry.value.name,
     timestamp: new Date().toISOString(),
     event_id: leadEventId,
     ...getStoredFbParams(),
   }
 
-  console.info('[AleBarreto Registro]', payload)
+  console.info('[LuisaPita Registro]', payload)
 
   await fetch(import.meta.env.VITE_WEBHOOK_REGISTRO, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       ...payload,
-      source: 'ale-barreto-web',
+      source: 'luisa-pita-web',
     }),
   }).catch(() => {})
 
   // Meta Pixel — evento Lead (deduplicado con CAPI via event_id)
   ;(window as any).fbq?.('track', 'Lead',
-    { content_name: 'cita-estrategica' },
+    { content_name: 'programa-lpb' },
     { eventID: leadEventId }
   )
 
   submitting.value = false
-  localStorage.setItem('os_contact', JSON.stringify({
+  localStorage.setItem('lpb_contact', JSON.stringify({
     nombre: form.value.nombre.trim(),
     email: form.value.email.trim().toLowerCase(),
     phone: parsedPhoneE164.value,
@@ -229,9 +226,9 @@ watch(dropdownOpen, open => {
 
           <!-- ── FORMULARIO ─────────────────────────────────── -->
           <!-- ── FORMULARIO ─────────────────────────────────── -->
-            <p class="rmodal__eyebrow">Asesoría gratuita</p>
-            <h2 id="rmodal-title" class="rmodal__title">Agenda tu sesión<br><span class="rmodal__title-accent">sin costo</span></h2>
-            <p class="rmodal__subtitle">Cupos limitados — completa tus datos y te daremos acceso al video.</p>
+            <p class="rmodal__eyebrow">Acceso gratuito</p>
+            <h2 id="rmodal-title" class="rmodal__title">Ver el video<br><span class="rmodal__title-accent">gratis</span></h2>
+            <p class="rmodal__subtitle">Cupos limitados — completa tus datos y accede al video ahora.</p>
 
             <form class="rmodal__form" @submit.prevent="handleSubmit" novalidate>
 
@@ -359,20 +356,6 @@ watch(dropdownOpen, open => {
                 </span>
               </div>
 
-              <!-- Empresa -->
-              <div class="rmodal__field" :class="{ 'has-error': touched.empresa && errors.empresa }">
-                <label for="r-empresa">Nombre de tu proyecto</label>
-                <input
-                  id="r-empresa"
-                  v-model="form.empresa"
-                  type="text"
-                  placeholder="Ej: Remodelación Sala"
-                  autocomplete="organization"
-                  @blur="onBlur('empresa')"
-                />
-                <span v-if="touched.empresa && errors.empresa" class="rmodal__error">{{ errors.empresa }}</span>
-              </div>
-
               <!-- Submit -->
               <button class="rmodal__submit" type="submit" :disabled="submitting">
                 <svg v-if="submitting" class="rmodal__spinner" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -383,7 +366,7 @@ watch(dropdownOpen, open => {
                     <polyline points="20 6 9 17 4 12"/>
                   </svg>
                 </template>
-                {{ submitting ? 'Enviando...' : 'AGENDAR MI ASESORÍA' }}
+                {{ submitting ? 'Enviando...' : 'VER EL VIDEO AHORA' }}
               </button>
 
               <p class="rmodal__legal">

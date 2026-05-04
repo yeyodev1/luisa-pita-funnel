@@ -1,27 +1,36 @@
-// Ale Barreto — Expert in Wood
-$BAKANO-PINK:   #D4A373;   // Wood Pastel (Primary)
-$BAKANO-DARK:   #283618;   // Dark Forest/Earth (Text)
-$BAKANO-LIGHT:  #FEFAE0;   // Cream/Soft Pastel (Backgrounds)
-$BAKANO-PURPLE: #BC6C25;   // Earthy Brown (Secondary)
-$BAKANO-GREEN:  #606C38;   // Sage Green (Accent)
+// Luisa Pita Bejarano — Programa de Transformación
+// Paleta: Verde / Negro / Blanco
+
+$LPB-GREEN:   #16C784;   // Verde vibrante — CTAs y acentos principales
+$LPB-GREEN-D: #0A9E68;   // Verde oscuro — hover states
+$LPB-BLACK:   #0D1117;   // Negro profundo — fondos oscuros y texto
+$LPB-DARK:    #0D1117;   // Alias texto oscuro
+$LPB-LIGHT:   #F0FFF8;   // Fondo muy claro (tinte verde suave)
+$LPB-SURFACE: #F5FFFA;   // Cards/superficies claras
 
 // Aliases semánticos
-$AB-WOOD:    #D4A373;
-$AB-EARTH:   #BC6C25;
-$AB-FOREST:  #283618;
-$AB-SAGE:    #606C38;
-$AB-CREAM:   #FEFAE0;
-$AB-WHITE:   #ffffff;
+$LPB-PRIMARY:   $LPB-GREEN;
+$LPB-SECONDARY: $LPB-GREEN-D;
+$LPB-ACCENT:    $LPB-GREEN;
 
-// Color primario
-$BAKANO-PRIMARY: $BAKANO-PINK;
+// Legacy (backward-compat — todos apuntan a verde/negro)
+$LPB-PINK:    $LPB-GREEN;
+$LPB-PURPLE:  $LPB-GREEN-D;
+$LPB-CORAL:   $LPB-GREEN;
+
+$BAKANO-PRIMARY: $LPB-GREEN;
+$BAKANO-PINK:    $LPB-GREEN;
+$BAKANO-DARK:    $LPB-BLACK;
+$BAKANO-LIGHT:   $LPB-LIGHT;
+$BAKANO-PURPLE:  $LPB-GREEN-D;
+$BAKANO-GREEN:   $LPB-GREEN;
 
 // Colores base
 $white: #ffffff;
 $text-light: #f5f5f5;
-$overlay-wood: rgba($BAKANO-PINK, 0.1);
+$overlay-primary: rgba($LPB-GREEN, 0.1);
 
-// Colores adicionales para UI (Mantenemos la escala de grises para utilidad)
+// Grises UI
 $gray-100: #f8f9fa;
 $gray-200: #e9ecef;
 $gray-300: #dee2e6;
@@ -32,8 +41,18 @@ $gray-700: #495057;
 $gray-800: #343a40;
 $gray-900: #212529;
 
-// Legacy Aliases (to prevent build errors)
-$OS-RED:   $BAKANO-PINK;
-$OS-NAVY:  $AB-FOREST;
-$OS-BLUE:  $AB-SAGE;
-$OS-DARK:  $AB-FOREST;
+// AB aliases
+$AB-WOOD:    $LPB-GREEN;
+$AB-EARTH:   $LPB-GREEN-D;
+$AB-FOREST:  $LPB-BLACK;
+$AB-SAGE:    $LPB-GREEN;
+$AB-CREAM:   $LPB-LIGHT;
+$AB-WHITE:   #ffffff;
+
+// OS aliases
+$OS-RED:     $LPB-GREEN;
+$OS-NAVY:    $LPB-BLACK;
+$OS-BLUE:    $LPB-GREEN-D;
+$OS-DARK:    $LPB-BLACK;
+$OS-LIGHT:   $LPB-LIGHT;
+$OS-SURFACE: $LPB-SURFACE;

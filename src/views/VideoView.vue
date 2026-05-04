@@ -3,7 +3,8 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import CalendarModal from '@/components/CalendarModal.vue'
 import { trackStage, generateEventId } from '@/utils/ghl'
 import { useContactStore } from '@/stores/contact'
-import alePhoto from '@/assets/team/ale-barreto.png'
+const CDN = 'https://res.cloudinary.com/dkosgkjpq/image/upload'
+const LUISA_VV = `${CDN}/w_560,h_700,c_fill,g_face,q_auto,f_auto/luisa-pita/luisa-3.jpg`
 
 const contactStore = useContactStore()
 
@@ -12,7 +13,7 @@ const calendarOpen = ref(false)
 
 // ── Contact capture guard ─────────────────────────────────────────────────────
 const captureOpen = ref(false)
-const captureForm = ref({ nombre: '', apellido: '', empresa: '', email: '', telefono: '' })
+const captureForm = ref({ nombre: '', apellido: '', email: '', telefono: '' })
 const captureErrors = ref<Record<string, string>>({})
 const captureTouched = ref<Record<string, boolean>>({})
 const captureSubmitting = ref(false)
@@ -21,7 +22,6 @@ const validateCapture = () => {
   const e: Record<string, string> = {}
   if (captureForm.value.nombre.trim().length < 2) e.nombre = 'Ingresa tu nombre'
   if (captureForm.value.apellido.trim().length < 2) e.apellido = 'Ingresa tu apellido'
-  if (captureForm.value.empresa.trim().length < 2) e.empresa = 'Ingresa el nombre de tu proyecto'
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(captureForm.value.email.trim())) e.email = 'Email inválido'
   if (captureForm.value.telefono.trim().length < 7) e.telefono = 'Teléfono inválido'
   captureErrors.value = e
@@ -29,14 +29,13 @@ const validateCapture = () => {
 }
 
 const submitCapture = async () => {
-  captureTouched.value = { nombre: true, apellido: true, empresa: true, email: true, telefono: true }
+  captureTouched.value = { nombre: true, apellido: true, email: true, telefono: true }
   if (!validateCapture()) return
   captureSubmitting.value = true
 
   contactStore.save({
     nombre: captureForm.value.nombre.trim(),
     apellido: captureForm.value.apellido.trim(),
-    negocio: captureForm.value.empresa.trim(),
     email: captureForm.value.email.trim().toLowerCase(),
     telefono: captureForm.value.telefono.trim(),
   })
@@ -101,7 +100,7 @@ onUnmounted(() => { if (timer) clearInterval(timer) })
 
     <!-- Top bar -->
     <header class="vv-topbar">
-      <h2 class="vv-topbar__logo-text">ALE BARRETO</h2>
+      <h2 class="vv-topbar__logo-text">LUISA PITA BEJARANO</h2>
     </header>
 
     <!-- Main content -->
@@ -119,15 +118,15 @@ onUnmounted(() => { if (timer) clearInterval(timer) })
       <!-- Headline -->
       <section class="vv-headline">
         <p class="vv-eyebrow">
-          <i class="fa-solid fa-tree" aria-hidden="true"></i>
-          Antes de agendar
+          <i class="fa-solid fa-heart-pulse" aria-hidden="true"></i>
+          Antes de continuar
         </p>
         <h1 class="vv-h1">
-          Descubre por qué los proyectos de lujo
-          <span class="vv-accent">eligen a Ale Barreto</span>
+          El método exacto para bajar 8 kilos en 8 semanas
+          <span class="vv-accent">sin efecto rebote</span>
         </h1>
         <p class="vv-subtitle">
-          Ve el video completo. Ale Barreto te explica cómo transformamos espacios con la nobleza de la madera.
+          Ve el video completo. Luisa Pita Bejarano te explica por qué las dietas tradicionales fallan y cómo el programa funciona diferente.
         </p>
       </section>
 
@@ -159,7 +158,7 @@ onUnmounted(() => { if (timer) clearInterval(timer) })
           @click="calendarOpen = true"
         >
           <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
-          AGENDAR MI ASESORÍA DE DISEÑO
+          QUIERO ACCEDER AL PROGRAMA
         </button>
 
         <p class="vv-cta-sub">
@@ -173,22 +172,22 @@ onUnmounted(() => { if (timer) clearInterval(timer) })
         <div class="vv-authority__inner">
           <div class="vv-authority__photo-wrap">
             <div class="vv-authority__avatar" aria-hidden="true">
-              <img :src="alePhoto" alt="Ale Barreto" class="vv-authority__img" />
+              <img :src="LUISA_VV" alt="Luisa Pita Bejarano" class="vv-authority__img" loading="lazy" />
             </div>
           </div>
           <div class="vv-authority__content">
-            <p class="vv-authority__eyebrow">Tu especialista asignada</p>
-            <h2 id="authority-heading" class="vv-authority__name">Ale Barreto</h2>
-            <p class="vv-authority__role">Experta en Diseño y Construcción en Madera</p>
+            <p class="vv-authority__eyebrow">Tu coach de transformación</p>
+            <h2 id="authority-heading" class="vv-authority__name">Luisa Pita Bejarano</h2>
+            <p class="vv-authority__role">Coach de Transformación Corporal para Mujeres Ocupadas</p>
             <p class="vv-authority__bio">
-              Con años de experiencia en el mercado ecuatoriano, me especializo en crear
-              espacios que combinan la nobleza de la madera con diseños modernos y funcionales.
-              Mi objetivo es que cada proyecto sea una inversión que dure toda la vida.
+              Especializada en ayudar a mujeres adultas a perder grasa y tonificar su cuerpo
+              sin dietas imposibles ni rutinas que no encajan en su vida real.
+              Mi método elimina el efecto rebote porque ataca la causa raíz.
             </p>
             <ul class="vv-authority__creds" role="list">
-              <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i> Especialista en maderas nobles y tratadas</li>
-              <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i> Diseños exclusivos a medida</li>
-              <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i> Gestión integral: del plano a la instalación</li>
+              <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i> Especialista en nutrición y hábitos sostenibles</li>
+              <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i> Método comprobado: 8 kilos en 8 semanas sin rebote</li>
+              <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i> Más de 200 mujeres transformadas</li>
             </ul>
           </div>
         </div>
@@ -202,7 +201,7 @@ onUnmounted(() => { if (timer) clearInterval(timer) })
         <RouterLink to="/politicas-privacidad">Política de Privacidad</RouterLink>
         <RouterLink to="/aviso-legal">Aviso Legal</RouterLink>
       </nav>
-      <p class="vv-footer__copy">© {{ new Date().getFullYear() }} ALE BARRETO. Todos los derechos reservados.</p>
+      <p class="vv-footer__copy">© {{ new Date().getFullYear() }} LUISA PITA BEJARANO. Todos los derechos reservados.</p>
     </footer>
 
   </div>
@@ -216,11 +215,11 @@ onUnmounted(() => { if (timer) clearInterval(timer) })
       <div v-if="captureOpen" class="capture-overlay" role="dialog" aria-modal="true" aria-labelledby="capture-title">
         <div class="capture-modal">
           <div class="capture-modal__header">
-            <h2 class="capture-modal__logo-text">ALE BARRETO</h2>
+            <h2 class="capture-modal__logo-text">LUISA PITA BEJARANO</h2>
             <h2 id="capture-title" class="capture-modal__title">
               Antes de ver el video, <span>confirma tus datos</span>
             </h2>
-            <p class="capture-modal__sub">Para personalizar tu asesoría de diseño</p>
+            <p class="capture-modal__sub">Para personalizar tu experiencia de transformación</p>
           </div>
           <form class="capture-modal__form" @submit.prevent="submitCapture" novalidate>
             <div class="capture-row">
@@ -234,11 +233,6 @@ onUnmounted(() => { if (timer) clearInterval(timer) })
                 <input v-model="captureForm.apellido" type="text" placeholder="Ej: Pérez" @blur="captureTouched.apellido = true" />
                 <span v-if="captureTouched.apellido && captureErrors.apellido" class="capture-field__error">{{ captureErrors.apellido }}</span>
               </div>
-            </div>
-            <div class="capture-field" :class="{ error: captureTouched.empresa && captureErrors.empresa }">
-              <label>Tu proyecto</label>
-              <input v-model="captureForm.empresa" type="text" placeholder="Ej: Remodelación Sala" @blur="captureTouched.empresa = true" />
-              <span v-if="captureTouched.empresa && captureErrors.empresa" class="capture-field__error">{{ captureErrors.empresa }}</span>
             </div>
             <div class="capture-field" :class="{ error: captureTouched.email && captureErrors.email }">
               <label>Email</label>
