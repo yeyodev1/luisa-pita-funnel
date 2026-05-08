@@ -3,8 +3,48 @@
  * NoSpaceView.vue — /sin-cupo
  *
  * Página de rechazo empático cuando no califica en QualifyModal.
- * Mantiene cooldown 24h y deriva al usuario a Instagram.
+ * Cooldown 48h: el contador en pantalla muestra cuándo puede volver a aplicar.
  */
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+
+const COOLDOWN_MS = 48 * 60 * 60 * 1000
+
+const now = ref(Date.now())
+const disqAt = ref<number>(0)
+
+const remainingMs = computed(() => {
+  if (!disqAt.value) return 0
+  return Math.max(0, disqAt.value + COOLDOWN_MS - now.value)
+})
+
+const canReapply = computed(() => remainingMs.value <= 0)
+
+const countdown = computed(() => {
+  const total = Math.floor(remainingMs.value / 1000)
+  const h = String(Math.floor(total / 3600)).padStart(2, '0')
+  const m = String(Math.floor((total % 3600) / 60)).padStart(2, '0')
+  const s = String(total % 60).padStart(2, '0')
+  return `${h}:${m}:${s}`
+})
+
+let timerId: ReturnType<typeof setInterval> | null = null
+
+onMounted(() => {
+  disqAt.value = Number(localStorage.getItem('lpb_disq_at') ?? '0')
+  now.value = Date.now()
+  timerId = setInterval(() => {
+    now.value = Date.now()
+  }, 1000)
+})
+
+onBeforeUnmount(() => {
+  if (timerId) clearInterval(timerId)
+})
+
+const reapply = () => {
+  localStorage.removeItem('lpb_disq_at')
+  window.location.href = '/'
+}
 </script>
 
 <template>
@@ -14,13 +54,37 @@
         <i class="fa-solid fa-heart" />
       </span>
 
-      <h1 class="ns__title">Esta cohorte no es para ti — y está bien.</h1>
+      <h1 class="ns__title">Esta cohorte no es para ti hoy — y está bien.</h1>
 
       <p class="ns__lead">
         La comunidad anual de Luisa Pita Bejarano está hecha para mujeres que pueden invertir
         <strong>capital tres cifras</strong> y comprometerse <strong>un año entero</strong>.
         Si hoy no es tu momento, no fuerces algo que no calza con tu vida real.
       </p>
+
+      <div class="ns__cooldown" :class="{ 'ns__cooldown--ready': canReapply }">
+        <p class="ns__cooldown-label">
+          <template v-if="canReapply">
+            <i class="fa-solid fa-circle-check" aria-hidden="true" />
+            Ya puedes volver a aplicar
+          </template>
+          <template v-else>
+            <i class="fa-solid fa-hourglass-half" aria-hidden="true" />
+            Podrás volver a intentarlo en
+          </template>
+        </p>
+        <p v-if="!canReapply" class="ns__cooldown-clock">
+          {{ countdown }}
+        </p>
+        <p v-if="!canReapply" class="ns__cooldown-hint">
+          48 horas desde que respondiste — si tu situación cambia, estaremos aquí.
+        </p>
+
+        <button v-if="canReapply" class="ns__cooldown-cta" type="button" @click="reapply">
+          Volver a aplicar ahora
+          <i class="fa-solid fa-arrow-right" aria-hidden="true" />
+        </button>
+      </div>
 
       <div class="ns__card">
         <h2>Mientras tanto, no te quedes lejos.</h2>
@@ -38,10 +102,6 @@
           Seguir a @luisapitabejarano
         </a>
       </div>
-
-      <p class="ns__small">
-        Podrás volver a registrarte después de 24 horas si tu situación cambia.
-      </p>
 
       <nav class="ns__legal">
         <RouterLink to="/politicas-privacidad">Privacidad</RouterLink>
@@ -104,6 +164,77 @@
   }
 }
 
+.ns__cooldown {
+  margin-top: 0.5rem;
+  background: #0d1117;
+  color: #ffffff;
+  border-radius: 1.25rem;
+  padding: 1.5rem 1.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  border: 2px solid rgba(22, 199, 132, 0.25);
+}
+
+.ns__cooldown--ready {
+  background: linear-gradient(180deg, #16c784 0%, #0a9e68 100%);
+  color: #0d1117;
+  border-color: rgba(13, 17, 23, 0.15);
+}
+
+.ns__cooldown-label {
+  margin: 0;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.85;
+}
+
+.ns__cooldown-clock {
+  margin: 0;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.85rem, 6vw, 2.4rem);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+  color: #16c784;
+}
+
+.ns__cooldown-hint {
+  margin: 0;
+  font-size: 0.82rem;
+  opacity: 0.7;
+}
+
+.ns__cooldown-cta {
+  margin-top: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #0d1117;
+  color: #16c784;
+  border: 0;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 140ms ease, background 160ms ease, color 160ms ease;
+
+  &:hover {
+    background: #ffffff;
+    color: #0d1117;
+    transform: translateY(-1px);
+  }
+}
+
 .ns__card {
   margin-top: 1rem;
   background: #ffffff;
@@ -147,12 +278,6 @@
     background: #16c784;
     color: #0d1117;
   }
-}
-
-.ns__small {
-  font-size: 0.85rem;
-  color: #6b7280;
-  margin-top: 0.5rem;
 }
 
 .ns__legal {

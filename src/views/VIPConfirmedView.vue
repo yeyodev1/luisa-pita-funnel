@@ -2,8 +2,8 @@
 /**
  * VIPConfirmedView.vue — /registrada
  *
- * Confirmación tras calificar para la lista VIP de la preventa.
- * Muestra el primer nombre del lead (lpb_contact) y los próximos pasos.
+ * Confirmación tras dejar contacto y calificar a la lista VIP.
+ * Mensaje principal: ya tenemos tus datos — está atenta a tu celular y email.
  */
 import { computed, onMounted, ref } from 'vue'
 
@@ -11,20 +11,24 @@ const CDN = 'https://res.cloudinary.com/dkosgkjpq/image/upload'
 const LUISA_PORTRAIT = `${CDN}/w_480,h_600,c_fill,g_face,q_auto,f_auto/luisa-pita/luisa-11.jpg`
 
 const contactName = ref<string>('')
+const contactEmail = ref<string>('')
 
 onMounted(() => {
   try {
     const raw = localStorage.getItem('lpb_contact')
     if (!raw) return
-    const data = JSON.parse(raw) as { nombre?: string }
+    const data = JSON.parse(raw) as { nombre?: string; email?: string }
     if (data?.nombre) contactName.value = data.nombre.split(' ')[0]
+    if (data?.email) contactEmail.value = data.email
   } catch {
     /* ignore corrupt storage */
   }
 })
 
 const greeting = computed(() =>
-  contactName.value ? `Bienvenida a la lista VIP, ${contactName.value}.` : 'Bienvenida a la lista VIP.',
+  contactName.value
+    ? `Listo, ${contactName.value}. Ya tenemos tus datos.`
+    : 'Listo. Ya tenemos tus datos.',
 )
 </script>
 
@@ -34,15 +38,14 @@ const greeting = computed(() =>
       <div class="vip__container">
         <span class="vip__badge">
           <i class="fa-solid fa-check" aria-hidden="true" />
-          Tu cupo VIP está reservado
+          Estás dentro de la lista VIP
         </span>
 
-        <h1 class="vip__title">
-          {{ greeting }}
-        </h1>
+        <h1 class="vip__title">{{ greeting }}</h1>
         <p class="vip__subtitle">
-          Eres parte del grupo cerrado que recibirá la preventa de la
-          <strong>comunidad anual con Luisa Pita Bejarano</strong> antes que el resto del mundo.
+          Estás dentro del grupo cerrado que recibirá la preventa de la
+          <strong>comunidad anual con Luisa Pita Bejarano</strong> antes que el resto. No tienes que hacer
+          nada más por ahora — <strong>está atenta a tu celular y a tu email</strong>.
         </p>
 
         <figure class="vip__portrait">
@@ -57,6 +60,24 @@ const greeting = computed(() =>
       </div>
     </section>
 
+    <section class="vip__alert">
+      <div class="vip__container vip__alert__inner">
+        <span class="vip__alert__icon" aria-hidden="true">
+          <i class="fa-solid fa-mobile-screen-button" />
+        </span>
+        <div>
+          <h2>Mantén tu celular cerca.</h2>
+          <p>
+            Te escribiremos por WhatsApp y al email
+            <strong v-if="contactEmail">{{ contactEmail }}</strong>
+            <strong v-else>que registraste</strong>
+            con la información oficial y, sobre todo, con el aviso de apertura de preventa y tu código de
+            descuento. No reveles tu código a nadie — es exclusivo para ti.
+          </p>
+        </div>
+      </div>
+    </section>
+
     <section class="vip__steps">
       <div class="vip__container">
         <h2 class="vip__steps-title">Lo que sigue</h2>
@@ -67,7 +88,8 @@ const greeting = computed(() =>
             <div>
               <h3>Revisa tu email y WhatsApp en las próximas horas</h3>
               <p>
-                Te llegará un mensaje de confirmación con la información oficial de la comunidad y tu lugar en la lista VIP.
+                Te llegará un mensaje de confirmación con la información oficial de la comunidad y tu
+                lugar en la lista VIP.
               </p>
             </div>
           </li>
@@ -76,7 +98,8 @@ const greeting = computed(() =>
             <div>
               <h3>Recibirás aviso 24h antes de que abra la preventa</h3>
               <p>
-                Solo las registradas saben antes que nadie. Tendrás tiempo de tener el capital tres cifras listo y reservar tu cupo sin estrés.
+                Solo las registradas saben antes que nadie. Tendrás tiempo de tener el capital tres cifras
+                listo y reservar tu cupo sin estrés.
               </p>
             </div>
           </li>
@@ -85,7 +108,8 @@ const greeting = computed(() =>
             <div>
               <h3>Tu código de descuento exclusivo llega al email registrado</h3>
               <p>
-                Es único, intransferible y solo válido durante la ventana de preventa. Es nuestra forma de premiar tu decisión de entrar primero.
+                Es único, intransferible y solo válido durante la ventana de preventa. Es nuestra forma de
+                premiar tu decisión de entrar primero.
               </p>
             </div>
           </li>
@@ -96,7 +120,9 @@ const greeting = computed(() =>
     <section class="vip__cta">
       <div class="vip__container">
         <h2>Mientras tanto, no te despegues de Luisa</h2>
-        <p>Sigue su trabajo y su comunidad en redes para llegar más fuerte el día que abra la preventa.</p>
+        <p>
+          Sigue su trabajo en redes para llegar más fuerte el día que abra la preventa.
+        </p>
         <div class="vip__links">
           <a
             href="https://www.instagram.com/luisapitabejarano/"
@@ -198,6 +224,53 @@ const greeting = computed(() =>
     object-fit: cover;
     object-position: center top;
   }
+}
+
+.vip__alert {
+  padding: 0 0 2rem;
+}
+
+.vip__alert__inner {
+  background: #0d1117;
+  color: #ffffff;
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  border: 2px solid rgba(22, 199, 132, 0.25);
+
+  h2 {
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin: 0 0 0.45rem;
+  }
+
+  p {
+    margin: 0;
+    color: #d1d5db;
+    line-height: 1.55;
+    font-size: 0.95rem;
+
+    strong {
+      color: #16c784;
+      font-weight: 700;
+      word-break: break-word;
+    }
+  }
+}
+
+.vip__alert__icon {
+  flex-shrink: 0;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 0.85rem;
+  background: #16c784;
+  color: #0d1117;
+  display: grid;
+  place-items: center;
+  font-size: 1.05rem;
 }
 
 .vip__steps {

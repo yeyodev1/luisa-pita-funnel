@@ -153,7 +153,7 @@ router.afterEach((to) => {
 })
 
 // ── Router Guards ──────────────────────────────────────────────────────────────
-const COOLDOWN_MS = 24 * 60 * 60 * 1000
+const COOLDOWN_MS = 48 * 60 * 60 * 1000
 
 const isLocalhost = () => {
   if (typeof window === 'undefined') return false
@@ -187,6 +187,12 @@ router.beforeEach((to, _from, next) => {
   // Si fue descalificado en cooldown y reintenta entrar al funnel, lo mandamos al rechazo.
   if (isDisqualified && routeName === 'funnel') {
     return next({ name: 'no-space' })
+  }
+
+  // Si ya dejó contacto (y no está descalificada), llevarla a la confirmación VIP
+  // en vez de mostrarle de nuevo el pitch de registro.
+  if (hasContact && !isDisqualified && routeName === 'funnel') {
+    return next({ name: 'vip-confirmed' })
   }
 
   next()
