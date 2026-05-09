@@ -163,6 +163,10 @@ const handleSubmit = async () => {
     pais: selectedCountry.value.name,
     timestamp: new Date().toISOString(),
     event_id: leadEventId,
+    step: 1,
+    stepName: 'contacto',
+    nota: 'Paso 1 - Contacto inicial preventa Comunidad Anual Luisa Pita. Lead capturó datos básicos, pendiente calificación VIP.',
+    tags: ['paso-1-contacto', 'preventa-comunidad-anual', 'luisa-pita-web', 'lead-sin-calificar'],
     ...getStoredFbParams(),
   }
 

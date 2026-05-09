@@ -84,6 +84,21 @@ onUnmounted(() => document.removeEventListener('keydown', onKey))
 const sendQualificationWebhook = async (calificada: boolean) => {
   const url = import.meta.env.VITE_WEBHOOK_CALIFICACION
   if (!url || !props.lead) return
+
+  const baseTags = [
+    'paso-2-calificacion',
+    'preventa-comunidad-anual',
+    'luisa-pita-web',
+    calificada ? 'lead-calificado-vip' : 'lead-no-calificado',
+    `capital-${capital.value}`,
+    `compromiso-${compromiso.value}`,
+    profile.value ? `perfil-${profile.value}` : 'perfil-sin-definir',
+  ]
+
+  const nota = calificada
+    ? `Paso 2 - CALIFICÓ VIP. Capital tres cifras: SI. Compromiso 1 año: SI. Perfil: ${profile.value}. Instagram: ${normalizedInstagram.value || 'no proporcionado'}. Enviar aviso 24h antes de apertura + código de descuento exclusivo.`
+    : `Paso 2 - NO CALIFICÓ. Capital tres cifras: ${capital.value.toUpperCase()}. Compromiso 1 año: ${compromiso.value.toUpperCase()}. Perfil: ${profile.value}. Instagram: ${normalizedInstagram.value || 'no proporcionado'}. Cooldown 48h activo, redirigida a IG @luisapitabejarano.`
+
   try {
     await fetch(url, {
       method: 'POST',
@@ -97,6 +112,10 @@ const sendQualificationWebhook = async (calificada: boolean) => {
         instagram: normalizedInstagram.value,
         timestamp: new Date().toISOString(),
         source: 'luisa-pita-web',
+        step: 2,
+        stepName: 'calificacion',
+        nota,
+        tags: baseTags,
       }),
     })
   } catch {
